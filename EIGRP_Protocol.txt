@@ -1,0 +1,56 @@
+This example shows how to create an EIGRP process and configure an interface for EIGRP:
+switch# configure terminal
+switch(config-router)# router eigrp Test1
+switch(config-router)# address-family ipv4 unicast
+switch(config-router-af)# autonomous-system 1
+switch(config-router-af)# exit
+switch(config-router)# exit
+switch(config)# i nterface ethernet 1/2
+switch(config-if)# no switchport
+switch(config-if)# ipv6 router eigrp Test1
+switch(config-if)# no shutdown
+switch(config-if)# copy running-config startup-config
+This example shows how to configure MD5 message digest authentication for EIGRP over Ethernet interface 1/2:
+switch# configure terminal
+switch(config)# router eigrp Test1
+switch(config-router)# exit
+switch(config)# interface ethernet 1/2
+switch(config-if)# no switchport
+switch(config-if)# ip router eigrp Test1
+switch(config-if)# ip authentication key-chain eigrp Test1 routeKeys
+switch(config-if)# ip authentication mode eigrp Test1 md5
+switch(config-if)# copy running-config startup-config
+This example shows how to configure a stub router to advertise directly connected and redistributed routes:
+switch# configure terminal
+switch(config)# router eigrp Test1
+switch(config-router)# address-family ipv4 unicast
+switch(config-router-af)# stub direct redistributed
+switch(config-router-af)# copy running-config startup-config
+This example shows the output from the show ip eigrp neighbor detail command:
+
+Router# show ip eigrp neighbor detail
+IP-EIGRP neighbors for process 201
+H Address Interface Hold Uptime SRTT RTO Q Seq Type
+(sec) (ms) Cnt Num
+0 10.1.1.2 Se3/1 11 00:00:59 1 4500 0 7
+Version 12.1/1.2, Retrans: 2, Retries: 0
+Stub Peer Advertising ( CONNECTED SUMMARY) Routes
+
+This example shows how to redistribute BGP into EIGRP for IPv4:
+switch# configure terminal
+switch(config)# router eigrp Test1
+switch(config-router)# redistribute bgp 100 route-map BGPFilter
+switch(config-router)# default-metric 500000 30 200 1 1500
+switch(config-router)# copy running-config startup-config
+
+This example shows how to limit the number of redistributed routes into EIGRP:
+switch# configure terminal
+switch(config)# router eigrp Test1
+switch(config-router)# redistribute bgp route-map FilterExternalBGP
+switch(config-router)# redistribute maximum-prefix 1000 75
+
+This example shows how to configure equal cost load balancing for EIGRP over IPv4 with a maximum of six equal cost paths:
+switch# configure terminal
+switch(config)# router eigrp Test1
+switch(config-router)# maximum-paths 6
+switch(config-router)# copy running-config startup-config

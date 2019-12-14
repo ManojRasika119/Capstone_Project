@@ -1,0 +1,40 @@
+This example shows how to enter neighbor address family configuration mode:
+switch(config)# router bgp 64496
+switch(config-router# neighbor 192.0.2.1
+switch(config-router-neighbor)# address-family ipv4 unicast
+switch(config-router-neighbor-af)#
+ 
+This example shows how to enter VRF neighbor address family configuration mode:
+
+switch(config)# router bgp 64497
+switch(config-router)# vrf vrf_A
+switch(config-router-vrf)# neighbor 209.165.201.1
+switch(config-router-vrf-neighbor)# address-family ipv6 unicast
+switch(config-router-vrf-neighbor-af)#
+
+This example shows how to enable BGP with the IPv4 unicast address family and manually add one network to advertise:
+switch# configure terminal
+switch(config)# router bgp 64496
+switch(config-router)# address-family ipv4 unicast
+switch(config-router-af)# network 192.0.2.0
+switch(config-router-af)# copy running-config startup-config
+
+This example shows how to configure a BGP peer:
+switch# configure terminal
+switch(config)# router bgp 64496
+switch(config-router)# neighbor 192.0.2.1 remote-as 64497
+switch(config-router-neighbor)# description Peer Router B
+switch(config-router-neighbor)# address-family ipv4 unicast
+switch(config-router-neighbor-af)# copy running-config startup-config
+
+This example shows how to configure dynamic AS numbers for a prefix peer:
+switch# configure terminal
+switch(config)# route-map BGPPeers
+switch(config-route-map)# match as-number 64496, 64501-64510
+switch(config-route-map)# match as-number as-path-list List1, List2
+switch(config-route-map)# exit
+switch(config)# router bgp 64496
+switch(config-router)# neighbor 192.0.2.0/8 remote-as route-map BGPPeers
+switch(config-router-neighbor)# description Peer Router B
+switch(config-router-neighbor)# address-family ipv4 unicast
+switch(config-router-neighbor-af)# copy running-config startup-config
