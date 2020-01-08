@@ -27,7 +27,7 @@ switch(config-router-neighbor)# description Peer Router B
 switch(config-router-neighbor)# address-family ipv4 unicast
 switch(config-router-neighbor-af)# copy running-config startup-config
 
-This example shows how to configure dynamic AS numbers for a prefix peer:
+This example shows how to configure dynamic AS numbers for a prefix pear
 switch# configure terminal
 switch(config)# route-map BGPPeers
 switch(config-route-map)# match as-number 64496, 64501-64510
